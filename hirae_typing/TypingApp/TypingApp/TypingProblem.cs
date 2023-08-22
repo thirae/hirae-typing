@@ -56,6 +56,9 @@ namespace TypingApp
                 // 配列からリストに格納する
                 lists.Add(values);
             }
+
+            //閉じる
+            sr.Close();
             return lists;
         }
     }

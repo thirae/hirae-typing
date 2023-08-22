@@ -46,6 +46,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="RankingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RankingForm.Designer.cs">
+      <DependentUpon>RankingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScoreForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ScoreForm.Designer.cs">
+      <DependentUpon>ScoreForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="TitleForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -61,6 +73,12 @@
       <DependentUpon>TypingForm.cs</DependentUpon>
     </Compile>
     <Compile Include="TypingProblem.cs" />
+    <EmbeddedResource Include="RankingForm.resx">
+      <DependentUpon>RankingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ScoreForm.resx">
+      <DependentUpon>ScoreForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TitleForm.resx">
       <DependentUpon>TitleForm.cs</DependentUpon>
     </EmbeddedResource>

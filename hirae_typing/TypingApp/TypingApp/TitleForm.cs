@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace TypingApp
 {
     public partial class TitleForm : Form
     {
+        // ランキングフォームを固定
+        public static RankingForm rank;
+        
         // コンストラクタ
         public TitleForm()
         {
@@ -38,7 +34,7 @@ namespace TypingApp
             // 現画面を非表示
             Visible = false;
 
-            // Form2を表示
+            // 次のformを表示
             TypingForm typ = new TypingForm();
             typ.Show();
         }

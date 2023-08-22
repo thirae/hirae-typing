@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
+using System.Timers;
 using System.Windows.Forms;
 
 namespace TypingApp
@@ -23,7 +19,13 @@ namespace TypingApp
         // 文字を置き換えるかどうか判断する変数
         private bool judge = false;
         // 一時的にテキストを保存しておくための変数
-        string str;
+        private string str;
+        // Stopwatchオブジェクトを作成する
+        readonly private Stopwatch stopWatch = new Stopwatch();
+        // Timer作成
+        private System.Timers.Timer timer;
+        // 時間保存用
+        private static string timeText;
 
         // コンストラクタ
         public TypingForm()
@@ -35,12 +37,28 @@ namespace TypingApp
             TypingProblem typPro = new TypingProblem();       
             // ファイル読み込み
             List<string[]> lists = typPro.CsvReader(typPro.GetFileName());
-
             // 読み込んだファイルをシャッフルする
             randomAry = typPro.Random(lists);
-
             // 問題表示
             Problem(randomAry[progression]);
+
+            // イベント間隔1000ミリ秒でタイマーを初期化
+            timer = new System.Timers.Timer(1000);
+            // タイマーにイベントを登録
+            timer.Elapsed += OnTimedEvent;
+            // タイマーを開始する
+            timer.Start();
+            // ストップウォッチを開始する
+            stopWatch.Start();
+        }
+
+        /// <summary>
+        /// timeTextを返す
+        /// </summary>
+        /// <returns></returns>
+        public static string getTime()
+        {
+            return timeText;
         }
 
         /// <summary>
@@ -59,12 +77,48 @@ namespace TypingApp
         }
 
         /// <summary>
+        /// テキストを更新する。
+        /// </summary>
+        /// <param name="text">表示するテキスト。</param>
+        private void UpdateText()
+        {
+            // ラベル更新
+            TimeLabel.Text = stopWatch.Elapsed.ToString();
+        }
+
+        /// <summary>
+        /// タイマーに呼び出されるイベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnTimedEvent(object sender, ElapsedEventArgs e)
+        {
+
+            // 違うスレッドのためInvokeメソッドを使用
+            if (InvokeRequired)
+            {
+                Invoke(new Action(UpdateText));
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        /// <summary>
         /// keyを押した際のイベント
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void TypingText_KeyPress(object sender, KeyPressEventArgs e)
         {
+            //バックスペースの時は、イベントをキャンセルする
+            if (e.KeyChar == '\b')
+            {
+                e.Handled = true;
+                return;
+            }
+
             // 文字を置き換える
             if (judge == true)
             {
@@ -84,11 +138,33 @@ namespace TypingApp
                 // 最後の文字なら
                 if (judgeAry.Length == num + 1)
                 {
-                    // キー反映が遅いため問題切り替え時は表示させない
+                    // キー反映が切り替え後のため切り替え時は表示させない
                     e.Handled = true;
                     // 初期化
                     num = 0;
                     TypingText.ResetText();
+
+                    // 最後の問題なら
+                    if (progression == randomAry.Length)
+                    {
+                        // ストップウォッチを止める
+                        stopWatch.Stop();
+                        // タイマーを止める
+                        timer.Stop();
+                        // 最後にラベル更新
+                        UpdateText();
+                        // 保存
+                        timeText = TimeLabel.Text;
+                        // 現画面を非表示
+                        Visible = false;
+
+                        // ScoreFormを表示
+                        ScoreForm scr = new ScoreForm();
+                        scr.Show();
+
+                        return;
+                    }
+
                     // 次の問題へ
                     Problem(randomAry[progression]);
                     return;
@@ -106,6 +182,16 @@ namespace TypingApp
                 // missラベル表示
                 MissLabel.Visible = true;
             }
+        }
+
+        /// <summary>
+        /// スタートに戻るボタンを押す際のイベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ReturnButton_Click(object sender, EventArgs e)
+        {
+            Application.Restart();
         }
     }
 }
