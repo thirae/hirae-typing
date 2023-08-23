@@ -1,9 +1,9 @@
 # hirae-typing
-・このプロジェクトが行うこと
+## このプロジェクトが行うこと
 動物名タイピングアプリの作成
 
-・設計URL
-https://docs.google.com/spreadsheets/d/1eDIzCE703qzUDCOkMKTl4MwIKwTa-PQWHeqqtMsV3jY/edit?usp=sharing
+## 設計
+[URL](https://docs.google.com/spreadsheets/d/1eDIzCE703qzUDCOkMKTl4MwIKwTa-PQWHeqqtMsV3jY/edit?usp=sharing)
 
-・このプロジェクトのメンテナンス者
+## このプロジェクトのメンテナンス者
 thirae
