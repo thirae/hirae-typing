@@ -16,10 +16,13 @@ namespace TypingApp
         public ScoreForm()
         {
             InitializeComponent();
+            // 日付取得
+            DateTime dt = DateTime.Now;
             // スコアを代入
-            string scoreTime;
+            double scoreTime;
             scoreTime = TypingForm.getTime();
             ScoreLabel.Text += scoreTime;
+            TitleForm.rank.RegistScore(scoreTime, dt);
         }
 
         /// <summary>
@@ -29,7 +32,9 @@ namespace TypingApp
         /// <param name="e"></param>
         private void RankingButton_Click(object sender, EventArgs e)
         {
-            
+            // ランキングを表示
+            TitleForm.rank.Visible = true;
+            TitleForm.rank.RankView();
         }
 
         /// <summary>

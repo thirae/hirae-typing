@@ -12,6 +12,9 @@ namespace TypingApp
         public TitleForm()
         {
             InitializeComponent();
+
+            rank = new RankingForm();
+            rank.Visible = false;
         }
 
         /// <summary>
@@ -21,7 +24,8 @@ namespace TypingApp
         /// <param name="e"></param>
         private void RankingButton_Click(object sender, EventArgs e)
         {
-            //後々
+            // ランキングを表示
+            rank.Visible = true;
         }
 
         /// <summary>

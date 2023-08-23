@@ -25,7 +25,7 @@ namespace TypingApp
         // Timer作成
         private System.Timers.Timer timer;
         // 時間保存用
-        private static string timeText;
+        private static double keepTime;
 
         // コンストラクタ
         public TypingForm()
@@ -56,9 +56,9 @@ namespace TypingApp
         /// timeTextを返す
         /// </summary>
         /// <returns></returns>
-        public static string getTime()
+        public static double getTime()
         {
-            return timeText;
+            return keepTime;
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace TypingApp
         private void UpdateText()
         {
             // ラベル更新
-            TimeLabel.Text = stopWatch.Elapsed.ToString();
+            TimeLabel.Text = stopWatch.Elapsed.TotalSeconds.ToString();
         }
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace TypingApp
                         // 最後にラベル更新
                         UpdateText();
                         // 保存
-                        timeText = TimeLabel.Text;
+                        keepTime = double.Parse(TimeLabel.Text);
                         // 現画面を非表示
                         Visible = false;
 

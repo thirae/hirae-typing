@@ -34,7 +34,6 @@
             this.TypingText = new System.Windows.Forms.TextBox();
             this.TimeLabel = new System.Windows.Forms.Label();
             this.ReturnButton = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // JapaneseLabel
@@ -88,11 +87,11 @@
             // 
             this.TimeLabel.AutoSize = true;
             this.TimeLabel.Font = new System.Drawing.Font("MS UI Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.TimeLabel.Location = new System.Drawing.Point(865, 19);
+            this.TimeLabel.Location = new System.Drawing.Point(898, 24);
             this.TimeLabel.Name = "TimeLabel";
-            this.TimeLabel.Size = new System.Drawing.Size(181, 24);
+            this.TimeLabel.Size = new System.Drawing.Size(111, 24);
             this.TimeLabel.TabIndex = 5;
-            this.TimeLabel.Text = "00:00:00:0000000";
+            this.TimeLabel.Text = "0.0000000";
             // 
             // ReturnButton
             // 
@@ -104,22 +103,11 @@
             this.ReturnButton.UseVisualStyleBackColor = true;
             this.ReturnButton.Click += new System.EventHandler(this.ReturnButton_Click);
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("MS UI Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label1.Location = new System.Drawing.Point(809, 142);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(181, 24);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "00:00:00:0000000";
-            // 
             // TypingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1058, 584);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.ReturnButton);
             this.Controls.Add(this.TimeLabel);
             this.Controls.Add(this.TypingText);
@@ -141,6 +129,5 @@
         private System.Windows.Forms.TextBox TypingText;
         private System.Windows.Forms.Label TimeLabel;
         private System.Windows.Forms.Button ReturnButton;
-        private System.Windows.Forms.Label label1;
     }
 }
