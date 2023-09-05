@@ -36,7 +36,7 @@
             // 
             this.MainPanel.Location = new System.Drawing.Point(12, 12);
             this.MainPanel.Name = "MainPanel";
-            this.MainPanel.Size = new System.Drawing.Size(1034, 558);
+            this.MainPanel.Size = new System.Drawing.Size(1040, 560);
             this.MainPanel.TabIndex = 0;
             // 
             // MainForm
@@ -46,6 +46,8 @@
             this.ClientSize = new System.Drawing.Size(1058, 584);
             this.Controls.Add(this.MainPanel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximumSize = new System.Drawing.Size(1080, 640);
+            this.MinimumSize = new System.Drawing.Size(1080, 640);
             this.Name = "MainForm";
             this.Text = "動物打";
             this.ResumeLayout(false);

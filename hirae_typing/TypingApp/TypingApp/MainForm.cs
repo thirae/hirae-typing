@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace TypingApp
 {
@@ -10,6 +9,7 @@ namespace TypingApp
         public static TypingControl typingCtr;
         public static RankingControl rankCtr;
         public static ScoreControl scoreCtr;
+        public static GameOverControl overCtr;
 
         public MainForm()
         {
@@ -18,6 +18,7 @@ namespace TypingApp
             typingCtr = new TypingControl();
             scoreCtr = new ScoreControl();
             rankCtr = new RankingControl();
+            overCtr = new GameOverControl();
 
             InitializeComponent();
 
@@ -30,12 +31,14 @@ namespace TypingApp
             MainPanel.Controls.Add(typingCtr);
             MainPanel.Controls.Add(scoreCtr);
             MainPanel.Controls.Add(rankCtr);
+            MainPanel.Controls.Add(overCtr);
 
             // タイトルのコントロールのみを見えるようにする
             titleCtr.Visible = true;
             typingCtr.Visible = false;
             rankCtr.Visible = false;
             scoreCtr.Visible = false;
+            overCtr.Visible = false;
         }
 
     }

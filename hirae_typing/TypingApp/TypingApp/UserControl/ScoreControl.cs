@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace TypingApp
@@ -13,7 +6,7 @@ namespace TypingApp
     public partial class ScoreControl : UserControl
     {
         // スコアを代入
-        private double scoreTime;
+        private int scoreTime;
 
         public ScoreControl()
         {
@@ -24,7 +17,7 @@ namespace TypingApp
         {
             // 日付取得
             DateTime dt = DateTime.Now;
-            scoreTime = MainForm.typingCtr.getTime();
+            scoreTime = MainForm.typingCtr.GetTime();
             ScoreLabel.Text += scoreTime;
             // csv書き込み
             MainForm.rankCtr.RegistScore(scoreTime, dt);

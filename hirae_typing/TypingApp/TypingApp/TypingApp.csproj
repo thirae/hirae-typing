@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UserControl\GameOverControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControl\GameOverControl.Designer.cs">
+      <DependentUpon>GameOverControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -81,6 +87,9 @@
     <Compile Include="TypingProblem.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControl\GameOverControl.resx">
+      <DependentUpon>GameOverControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControl\RankingControl.resx">
       <DependentUpon>RankingControl.cs</DependentUpon>

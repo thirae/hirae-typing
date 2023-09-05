@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -18,6 +19,8 @@ namespace TypingApp
         // ファイルパス
         private readonly string filePath;
 
+        private string rankText;
+
         public RankingControl()
         {
             InitializeComponent();
@@ -27,6 +30,8 @@ namespace TypingApp
             filePath = "./CsvFile/Ranking.csv";
             // CSV取得(ランキング)
             lists = typing.PathCsvReader(filePath);
+
+            rankText = "位";
 
             RankView();
         }
@@ -47,7 +52,7 @@ namespace TypingApp
                 rank++;
             }
             // 10番以内なら
-            if (rank < 10)
+            if (rank <= 10)
             {
                 //.\Ranking.csv
                 using (StreamWriter sw = new StreamWriter(filePath, true, Encoding.UTF8))
@@ -66,6 +71,8 @@ namespace TypingApp
         /// </summary>
         public void RankView()
         {
+            // リストのサブアイテムをクリア
+            RankingList.Items.Clear();
             // Listをスコア昇順でソート
             var sorted = lists.OrderBy(e => e[0]);
             int rank = 0;
@@ -75,11 +82,18 @@ namespace TypingApp
                 foreach (var row in sorted)
                 {
                     if (rank > 9) break;
+
+                    // 新しいListViewItemを作成
+                    var item = new ListViewItem((rank + 1).ToString() + rankText); // ランキング順位
+                    item.SubItems.Add(row[0]); // スコア
+                    item.SubItems.Add(row[1]); // 日付
+
                     // リストに登録
-                    RankingList.Items[rank].SubItems.Add(row[0]);
-                    RankingList.Items[rank].SubItems.Add(row[1]);
+                    RankingList.Items.Add(item);
                     rank++;
                 }
+                // リストビューのフォントサイズを変更
+                RankingList.Font = new Font("Arial", 12); // ここでフォントとサイズを調整
             }
             catch (ArgumentOutOfRangeException e)
             {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Security.Permissions;
 using System.Timers;
 using System.Windows.Forms;
@@ -9,28 +10,24 @@ namespace TypingApp
 {
     public partial class TypingControl : UserControl
     {
+        #region 変数
         // 現在何問目かの変数
-        private static int progression = 19;
+        private static int progression = 0;
         // シャッフルしたファイルを保存しておく配列
         private static string[][] randomAry;
-        // 判定用char型の配列
-        private char[] judgeAry;
-        // 現在何文字目か用の変数
-        private int num = 0;
-        // 文字を置き換えるかどうか判断する変数
-        private bool judge = false;
-        // 一時的にテキストを保存しておくための変数
-        private string str;
-        // Stopwatchオブジェクトを作成する
-        readonly private Stopwatch stopWatch = new Stopwatch();
         // Timer作成
         private System.Timers.Timer timer;
         // 時間保存用
-        private static double keepTime;
+        private static int keepTime;
         // fileパス
         private string filePath;
         // 時刻用変数
         DateTime startDT;
+        // 現在の文字のインデックス
+        private int currentIndex = 0;
+        // ライフ設定
+        private int life = 3;
+        #endregion
 
         public TypingControl()
         {
@@ -45,10 +42,9 @@ namespace TypingApp
         {
             // text書き換え
             JapaneseLabel.Text = ary[1];
-            RomajiLabel.Text = ary[2];
             RomajiRichTextBox.Text = ary[2];
-            // stringをchar型の配列に
-            judgeAry = RomajiLabel.Text.ToCharArray();
+            // 文字を中央に
+            RomajiRichTextBox.SelectionAlignment = HorizontalAlignment.Center;
             // 次の問題
             progression++;
         }
@@ -57,7 +53,7 @@ namespace TypingApp
         /// timeTextを返す
         /// </summary>
         /// <returns></returns>
-        public double getTime()
+        public int GetTime()
         {
             return keepTime;
         }
@@ -69,7 +65,9 @@ namespace TypingApp
         private void UpdateText()
         {
             TimeSpan timeSpan = DateTime.Now - startDT;
-            TimeLabel.Text = string.Format("{00}",timeSpan.Seconds);
+            keepTime = (int)timeSpan.TotalSeconds;
+            // 経過時間をラベルに表示
+            TimeLabel.Text = "Time : " + keepTime.ToString() + " 秒";
         }
 
         /// <summary>
@@ -79,6 +77,8 @@ namespace TypingApp
         /// <param name="e"></param>
         private void TypingControl_Load(object sender, EventArgs e)
         {
+            // フォーカスをあてる
+            RomajiRichTextBox.Focus();
             // ラベル非表示
             MissLabel.Visible = false;
             // インスタンス化
@@ -100,8 +100,8 @@ namespace TypingApp
             timer.Elapsed += OnTimedEvent;
             // タイマーを開始する
             timer.Start();
-            // ストップウォッチを開始する
-            stopWatch.Start();
+            // ラベル設定
+            LifeLabel.Text = "×" + life.ToString();
 
             ContextMenu = new ContextMenu();
         }
@@ -125,8 +125,7 @@ namespace TypingApp
             }
         }
 
-        [SecurityPermission(SecurityAction.Demand,
-            Flags = SecurityPermissionFlag.UnmanagedCode)]
+        [SecurityPermission(SecurityAction.Demand,Flags = SecurityPermissionFlag.UnmanagedCode)]
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             // Ctrl+VとShift+Insertを無効にする
@@ -144,53 +143,44 @@ namespace TypingApp
         }
 
         /// <summary>
-        /// keyを押した際のイベント
+        /// 入力イベント
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void TypingText_KeyPress(object sender, KeyPressEventArgs e)
+        private void RomajiRichTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // バックスペースの時は、イベントをキャンセルする
-            if (e.KeyChar == '\b')
+            // バックスペースとエンターキーのキーイベントを無効にする
+            if (e.KeyChar == (char)Keys.Back || e.KeyChar == (char)Keys.Enter)
             {
                 e.Handled = true;
                 return;
             }
-            // 文字を置き換える
-            if (judge == true)
-            {
-                // 一時的に保存したテキストを代入
-                TypingText.Text = str;
-                // カーソルの位置を末尾に
-                TypingText.Select(TypingText.Text.Length, 0);
-                judge = false;
-            }
-            // 入力されたキーと同じなら
-            if (e.KeyChar == judgeAry[num])
-            {
-                // missラベル非表示
-                MissLabel.Visible = false;
 
-                // 最後の文字なら
-                if (judgeAry.Length == num + 1)
+            if (currentIndex < RomajiRichTextBox.Text.Length && e.KeyChar == RomajiRichTextBox.Text[currentIndex])
+            {
+                // MissLabelが表示されているなら
+                if (MissLabel.Visible) MissLabel.Visible = false;
+                // 正しい文字を打った場合、文字の色を変更
+                RomajiRichTextBox.SelectionStart = currentIndex;
+                RomajiRichTextBox.SelectionLength = 1;
+                RomajiRichTextBox.SelectionColor = Color.Green; // 正しい文字の色
+                currentIndex++;
+                e.Handled = true;
+
+                // 全ての文字を正しく打った場合
+                if (currentIndex == RomajiRichTextBox.Text.Length)
                 {
-                    // キー反映が切り替え後のため切り替え時は表示させない
-                    e.Handled = true;
                     // 初期化
-                    num = 0;
-                    TypingText.ResetText();
+                    currentIndex = 0;
+                    RomajiRichTextBox.ResetText();
 
                     // 最後の問題なら
                     if (progression == randomAry.Length)
                     {
-                        // ストップウォッチを止める
-                        stopWatch.Stop();
                         // タイマーを止める
                         timer.Stop();
-                        // 最後にラベル更新
+                        // 最後に更新
                         UpdateText();
-                        // 保存
-                        keepTime = double.Parse(TimeLabel.Text);
                         // 現画面を非表示
                         Visible = false;
 
@@ -203,23 +193,70 @@ namespace TypingApp
                     Problem(randomAry[progression]);
                     return;
                 }
-                // 次の文字へ
-                num++;
             }
             else
             {
-                // 文字入力前のテキストを保存しておく
-                str = TypingText.Text;
-                // 次入力時置き換えるように
-                judge = true;
+                life--;
+                // ラベルに表示
+                LifeLabel.Text = "×" + life.ToString();
+                e.Handled = true;
                 // missラベル表示
                 MissLabel.Visible = true;
+                if (life <= 0)
+                {
+                    Visible = false;
+                    MainForm.overCtr.Visible = true;
+                    return;
+                }
             }
         }
 
+        /// <summary>
+        /// 再起動イベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ReturnButton_Click(object sender, System.EventArgs e)
         {
             Application.Restart();
         }
-    }
+
+        // ハートの描画メソッド
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            // // 親クラスのonPaint呼び出し
+            // base.OnPaint(e);
+            // 
+            // // ハートを描画するためのパスを作成
+            // GraphicsPath heartPath = new GraphicsPath();
+            // // ハートの上部の楕円を追加
+            // RectangleF topEllipse1 = new RectangleF(65, 200, 50, 50);
+            // RectangleF topEllipse2 = new RectangleF(115, 200, 50, 50);
+            // heartPath.AddArc(topEllipse1, 180, 180);
+            // heartPath.AddArc(topEllipse2, 180, 180);
+            // 
+            // // ハートの下部の逆三角形の頂点座標の位置
+            // PointF[] trianglePoints = new PointF[]
+            // {
+            //     new PointF(67, 225),
+            //     new PointF(163, 225),
+            //     new PointF(115, 275)
+            // };
+            // 
+            // // haertPathに加えてハート完成
+            // heartPath.AddPolygon(trianglePoints);
+            // 
+            // // ハートを描画 赤で塗りつぶし
+            // using (Brush heartBrush = new SolidBrush(Color.Red))
+            // {
+            //     e.Graphics.FillPath(heartBrush, heartPath);
+            // }
+            // 
+            // // ハートの輪郭を描画
+            // using (Pen pen = new Pen(Color.Red, 2))
+            // {
+            //     e.Graphics.DrawPath(pen, heartPath);
+            // }
+        }
+     }
 }
