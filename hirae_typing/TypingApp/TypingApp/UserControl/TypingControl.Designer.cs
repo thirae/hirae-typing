@@ -33,7 +33,12 @@
             this.MissLabel = new System.Windows.Forms.Label();
             this.ReturnButton = new System.Windows.Forms.Button();
             this.RomajiRichTextBox = new System.Windows.Forms.RichTextBox();
-            this.LifeLabel = new System.Windows.Forms.Label();
+            this.HeartPictureBox1 = new System.Windows.Forms.PictureBox();
+            this.HeartPictureBox2 = new System.Windows.Forms.PictureBox();
+            this.HeartPictureBox3 = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.HeartPictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.HeartPictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.HeartPictureBox3)).BeginInit();
             this.SuspendLayout();
             // 
             // JapaneseLabel
@@ -92,21 +97,40 @@
             this.RomajiRichTextBox.Text = "Romaji";
             this.RomajiRichTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.RomajiRichTextBox_KeyPress);
             // 
-            // LifeLabel
+            // HeartPictureBox1
             // 
-            this.LifeLabel.AutoSize = true;
-            this.LifeLabel.Font = new System.Drawing.Font("MS UI Gothic", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.LifeLabel.Location = new System.Drawing.Point(172, 27);
-            this.LifeLabel.Name = "LifeLabel";
-            this.LifeLabel.Size = new System.Drawing.Size(63, 33);
-            this.LifeLabel.TabIndex = 11;
-            this.LifeLabel.Text = "×3";
+            this.HeartPictureBox1.Location = new System.Drawing.Point(191, 7);
+            this.HeartPictureBox1.Name = "HeartPictureBox1";
+            this.HeartPictureBox1.Size = new System.Drawing.Size(74, 69);
+            this.HeartPictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.HeartPictureBox1.TabIndex = 12;
+            this.HeartPictureBox1.TabStop = false;
+            // 
+            // HeartPictureBox2
+            // 
+            this.HeartPictureBox2.Location = new System.Drawing.Point(111, 7);
+            this.HeartPictureBox2.Name = "HeartPictureBox2";
+            this.HeartPictureBox2.Size = new System.Drawing.Size(74, 69);
+            this.HeartPictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.HeartPictureBox2.TabIndex = 13;
+            this.HeartPictureBox2.TabStop = false;
+            // 
+            // HeartPictureBox3
+            // 
+            this.HeartPictureBox3.Location = new System.Drawing.Point(31, 7);
+            this.HeartPictureBox3.Name = "HeartPictureBox3";
+            this.HeartPictureBox3.Size = new System.Drawing.Size(74, 69);
+            this.HeartPictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.HeartPictureBox3.TabIndex = 14;
+            this.HeartPictureBox3.TabStop = false;
             // 
             // TypingControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.LifeLabel);
+            this.Controls.Add(this.HeartPictureBox3);
+            this.Controls.Add(this.HeartPictureBox2);
+            this.Controls.Add(this.HeartPictureBox1);
             this.Controls.Add(this.TimeLabel);
             this.Controls.Add(this.RomajiRichTextBox);
             this.Controls.Add(this.ReturnButton);
@@ -115,6 +139,9 @@
             this.Name = "TypingControl";
             this.Size = new System.Drawing.Size(1080, 500);
             this.Load += new System.EventHandler(this.TypingControl_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.HeartPictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.HeartPictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.HeartPictureBox3)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -127,6 +154,8 @@
         private System.Windows.Forms.Label MissLabel;
         private System.Windows.Forms.Button ReturnButton;
         private System.Windows.Forms.RichTextBox RomajiRichTextBox;
-        private System.Windows.Forms.Label LifeLabel;
+        private System.Windows.Forms.PictureBox HeartPictureBox1;
+        private System.Windows.Forms.PictureBox HeartPictureBox2;
+        private System.Windows.Forms.PictureBox HeartPictureBox3;
     }
 }

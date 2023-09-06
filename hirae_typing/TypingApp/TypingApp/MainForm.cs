@@ -10,6 +10,7 @@ namespace TypingApp
         public static RankingControl rankCtr;
         public static ScoreControl scoreCtr;
         public static GameOverControl overCtr;
+        public static WaitControl waitCtr;
 
         public MainForm()
         {
@@ -19,6 +20,7 @@ namespace TypingApp
             scoreCtr = new ScoreControl();
             rankCtr = new RankingControl();
             overCtr = new GameOverControl();
+            waitCtr = new WaitControl();
 
             InitializeComponent();
 
@@ -32,6 +34,7 @@ namespace TypingApp
             MainPanel.Controls.Add(scoreCtr);
             MainPanel.Controls.Add(rankCtr);
             MainPanel.Controls.Add(overCtr);
+            MainPanel.Controls.Add(waitCtr);
 
             // タイトルのコントロールのみを見えるようにする
             titleCtr.Visible = true;
@@ -39,6 +42,7 @@ namespace TypingApp
             rankCtr.Visible = false;
             scoreCtr.Visible = false;
             overCtr.Visible = false;
+            waitCtr.Visible = false;
         }
 
     }

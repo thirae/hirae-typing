@@ -32,6 +32,8 @@ namespace TypingApp
         {
             MainForm.typingCtr.Visible = true;
             Visible = false;
+            // 未実装
+            // MainForm.waitCtr.Visible = true;
         }
     }
 }

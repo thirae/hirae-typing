@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Drawing2D;
+using System.Net.Http;
 using System.Security.Permissions;
 using System.Timers;
 using System.Windows.Forms;
@@ -29,6 +29,9 @@ namespace TypingApp
         private int life = 3;
         #endregion
 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
         public TypingControl()
         {
             InitializeComponent();
@@ -86,24 +89,26 @@ namespace TypingApp
             // ファイル読み込み
             filePath = "TypingApp.CsvFile.TypingSheet.csv";
             List<string[]> lists = typPro.CsvReader(filePath);
+
+            ContextMenu = new ContextMenu();
+
             // 読み込んだファイルをシャッフルする
             randomAry = typPro.Random(lists);
             // 問題表示
             Problem(randomAry[progression]);
-
             // イベント間隔1000ミリ秒でタイマーを初期化
             timer = new System.Timers.Timer(1000);
-
             // 現在の時刻を取得
             startDT = DateTime.Now;
             // タイマーにイベントを登録
             timer.Elapsed += OnTimedEvent;
             // タイマーを開始する
             timer.Start();
-            // ラベル設定
-            LifeLabel.Text = "×" + life.ToString();
-
-            ContextMenu = new ContextMenu();
+            // リソースから画像を読み込む
+            Image image = Properties.Resources.oneheart;
+            HeartPictureBox1.Image = image;
+            HeartPictureBox2.Image = image;
+            HeartPictureBox3.Image = image;
         }
 
         /// <summary>
@@ -125,6 +130,12 @@ namespace TypingApp
             }
         }
 
+        /// <summary>
+        /// 貼り付け無効
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <param name="keyData"></param>
+        /// <returns></returns>
         [SecurityPermission(SecurityAction.Demand,Flags = SecurityPermissionFlag.UnmanagedCode)]
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
@@ -183,7 +194,6 @@ namespace TypingApp
                         UpdateText();
                         // 現画面を非表示
                         Visible = false;
-
                         // ScoreFormを表示
                         MainForm.scoreCtr.Visible = true;
 
@@ -196,9 +206,21 @@ namespace TypingApp
             }
             else
             {
+                switch (life)
+                {
+                    case 3:
+                        HeartPictureBox1.Visible = false;
+                        break;
+                    case 2:
+                        HeartPictureBox2.Visible = false;
+                        break;
+                    case 1:
+                        HeartPictureBox3.Visible = false;
+                        break;
+                    default:
+                        break;
+                }
                 life--;
-                // ラベルに表示
-                LifeLabel.Text = "×" + life.ToString();
                 e.Handled = true;
                 // missラベル表示
                 MissLabel.Visible = true;
@@ -220,43 +242,5 @@ namespace TypingApp
         {
             Application.Restart();
         }
-
-        // ハートの描画メソッド
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            // // 親クラスのonPaint呼び出し
-            // base.OnPaint(e);
-            // 
-            // // ハートを描画するためのパスを作成
-            // GraphicsPath heartPath = new GraphicsPath();
-            // // ハートの上部の楕円を追加
-            // RectangleF topEllipse1 = new RectangleF(65, 200, 50, 50);
-            // RectangleF topEllipse2 = new RectangleF(115, 200, 50, 50);
-            // heartPath.AddArc(topEllipse1, 180, 180);
-            // heartPath.AddArc(topEllipse2, 180, 180);
-            // 
-            // // ハートの下部の逆三角形の頂点座標の位置
-            // PointF[] trianglePoints = new PointF[]
-            // {
-            //     new PointF(67, 225),
-            //     new PointF(163, 225),
-            //     new PointF(115, 275)
-            // };
-            // 
-            // // haertPathに加えてハート完成
-            // heartPath.AddPolygon(trianglePoints);
-            // 
-            // // ハートを描画 赤で塗りつぶし
-            // using (Brush heartBrush = new SolidBrush(Color.Red))
-            // {
-            //     e.Graphics.FillPath(heartBrush, heartPath);
-            // }
-            // 
-            // // ハートの輪郭を描画
-            // using (Pen pen = new Pen(Color.Red, 2))
-            // {
-            //     e.Graphics.DrawPath(pen, heartPath);
-            // }
-        }
-     }
+    }
 }

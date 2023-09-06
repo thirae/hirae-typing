@@ -85,6 +85,12 @@
       <DependentUpon>TypingControl.cs</DependentUpon>
     </Compile>
     <Compile Include="TypingProblem.cs" />
+    <Compile Include="UserControl\WaitControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControl\WaitControl.Designer.cs">
+      <DependentUpon>WaitControl.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -108,9 +114,13 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="UserControl\TypingControl.resx">
       <DependentUpon>TypingControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControl\WaitControl.resx">
+      <DependentUpon>WaitControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="CsvFile\Ranking.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -128,6 +138,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\oneheart.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
