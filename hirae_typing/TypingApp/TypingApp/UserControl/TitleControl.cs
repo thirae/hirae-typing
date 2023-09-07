@@ -30,10 +30,10 @@ namespace TypingApp
         /// <param name="e"></param>
         private void PlayButton_Click(object sender, EventArgs e)
         {
-            MainForm.typingCtr.Visible = true;
-            Visible = false;
+            // MainForm.typingCtr.Visible = true;
             // 未実装
-            // MainForm.waitCtr.Visible = true;
+            MainForm.waitCtr.Visible = true;
+            Visible = false;
         }
     }
 }

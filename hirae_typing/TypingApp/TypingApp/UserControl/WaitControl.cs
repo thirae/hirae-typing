@@ -18,13 +18,15 @@ namespace TypingApp
             // タイマーの設定
             timer1.Interval = 50;
             timer1.Tick += new EventHandler(AnimateFade);
+
+            KeyDown += WaitControl_KeyDown;
         }
 
         private void WaitControl_Load(object sender, EventArgs e)
         {
-            EnterLabel.BackColor = Color.Transparent;
+            EnterLabel.ForeColor = Color.Transparent;
+            EnterLabel.Parent = this;
             timer1.Start();
-
         }
 
         private void AnimateFade(object sender, EventArgs e)
@@ -43,6 +45,15 @@ namespace TypingApp
             if (opacity <= 0.0 || opacity >= 1.0)
             {
                 opacityChange = -opacityChange;
+            }
+        }
+
+        private void WaitControl_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                MainForm.typingCtr.Visible = true;
+                Visible = false;
             }
         }
     }

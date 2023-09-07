@@ -34,6 +34,7 @@
             // EnterLabel
             // 
             this.EnterLabel.AutoSize = true;
+            this.EnterLabel.BackColor = System.Drawing.SystemColors.ButtonShadow;
             this.EnterLabel.Font = new System.Drawing.Font("MS UI Gothic", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.EnterLabel.Location = new System.Drawing.Point(216, 225);
             this.EnterLabel.Name = "EnterLabel";
